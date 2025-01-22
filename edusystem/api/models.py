@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 
 # Institution Model
@@ -60,3 +61,20 @@ class Analytics(models.Model):
 
     def __str__(self):
         return f"Analytics for {self.course}"
+    
+    
+
+# Define the roles as a tuple
+ROLES = (
+    ('admin', 'Admin'),
+    ('student', 'Student'),
+    ('instructor', 'Instructor'),
+)
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    bio = models.TextField(blank=True, null=True)
+    role = models.CharField(max_length=20, choices=ROLES, default='student')
+
+    def __str__(self):
+        return f"{self.user.username} - {self.get_role_display()}"    
