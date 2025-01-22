@@ -42,3 +42,11 @@ REST API for a course management system that supports multiple educational insti
 
 ## Usage
 Access the API endpoints via http://127.0.0.1:8000/. Refer to the API documentation for detailed usage.
+
+Demo Super User:  
+    
+    User: admin
+    Pass: admin
+
+Do not use in Production.    
+
