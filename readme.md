@@ -24,117 +24,77 @@ REST API for a course management system that supports multiple educational insti
    ```
 
 2. Navigate to the project directory:
-    ```bash
-    cd <project-directory>
-    ```
+   ```bash
+   cd <project-directory>
+   ```
 
 3. Set up a virtual environment:
-    ```bash
-    python -m venv env
-    source env/bin/activate  # On Windows use: .\env\\Scripts\\activate
-    ```
+   ```bash
+   python -m venv env
+   source env/bin/activate  # On Windows use: .\env\Scripts\activate
+   ```
 
 4. Install dependencies:
-    ```bash
-    pip install -r requirements.txt
-    ```
+   ```bash
+   pip install -r requirements.txt
+   ```
 
 5. Apply migrations:
-    ```bash
-    python manage.py migrate
-    ```
+   ```bash
+   python manage.py migrate
+   ```
 
 6. Create Superuser:
-    ```bash
-    python manage.py createsuperuser
-    ```
+   ```bash
+   python manage.py createsuperuser
+   ```
 
 7. Seed Data (optional):
-    ```bash
-    python manage.py seed_data
-    ```
+   ```bash
+   python manage.py seed_data
+   ```
 
 ## Usage
 
-Access the API endpoints via `http://127.0.0.1:8000/`. Refer to the API documentation for detailed usage.
+Access the API endpoints via http://127.0.0.1:8000/. Refer to the API documentation for detailed usage.
 
-## Role-Based Access Control (RBAC)
+## Authentication and RBAC
 
-### Default Permissions Based on Role:
+### Default Permissions
 
-- **Institution Viewset:**
-  - **Endpoint:** `/institutions/`
-  - **Permissions:**
-    - **Admin**: Can create, update, or delete institutions.
-    - **Any User**: Can **view** institutions.
-    - **Permission Class:** `IsAdminOrReadOnly`
+- **Institution Management**: Only admins can delete or modify institutions. Others can view.
+- **Course Management**: Everyone can view courses. Only admins can delete or modify.
+- **Student Management**: Only admins and instructors can manage students.
+- **Enrollment Management**: Only admins can view and modify enrollments.
+- **Analytics**: Only admins can view and modify analytics.
 
-- **Course Viewset:**
-  - **Endpoint:** `/courses/`
-  - **Permissions:**
-    - **Admin**: Can create, update, or delete courses.
-    - **Any User**: Can **view** courses.
-    - **Permission Class:** `IsAdminOrReadOnly`
+### Login and Authorization
 
-- **Student Viewset:**
-  - **Endpoint:** `/students/`
-  - **Permissions:**
-    - **Admin & Instructor**: Can create, update, or delete student records.
-    - **Any Authenticated User**: Can **view** student records.
-    - **Permission Class:** `IsAdminOrInstructor`
-
-- **Enrollment Viewset:**
-  - **Endpoint:** `/enrollments/`
-  - **Permissions:**
-    - **Admin**: Can create, update, or delete enrollments.
-    - **Any Authenticated User**: Can **view** their own enrollment record.
-    - **Permission Class:** `IsAdmin`
-
-- **Analytics Viewset:**
-  - **Endpoint:** `/analytics/`
-  - **Permissions:**
-    - **Admin**: Can **view** and **modify** analytics data.
-    - **Permission Class:** `IsAdmin`
-
-## Login Endpoint (For Postman)
-
-To authenticate and receive a JWT token, use the **login endpoint**.
-
-### Login Endpoint URL:
+The login endpoint is available at:
+```bash
+http://127.0.0.1:8000/api/login/
 ```
-POST http://127.0.0.1:8000/api/login/
-```
-
-### Request Body Example (JSON):
-```json
-{
-    "username": "your_username",
-    "password": "your_password"
-}
-```
-
-### Response:
-If successful, the response will include a JWT token, which you will use for authorization in subsequent requests.
-
-```json
-{
-    "access": "your_jwt_token_here",
-    "refresh": "your_refresh_token_here"
-}
-```
-
-## Authorization in Postman
 
 After logging in, you will receive a JWT token. Use this token to access protected endpoints.
 
 1. **Open Postman** and create a new request.
-2. In the **Headers** tab, add the following:
+2. Use the **Authorization** tab and select "Bearer Token" as the auth type.
+3. Paste your JWT token in the "Token" field.
+
+Alternatively, you can manually set it in the **Headers** tab:
    - **Key**: `Authorization`
    - **Value**: `Bearer <your_jwt_token_here>`
-   
-3. **Send the Request** to the API endpoint you want to interact with.
 
-Example of header:
+### Example of Authorization Header
+
 - **Key**: `Authorization`
 - **Value**: `Bearer your_jwt_token_here`
+
+## API Endpoints
+
+Refer to the auto-generated API documentation or Postman collection for detailed endpoints and payload structures.
+
+---
+
+For further assistance or feature requests, feel free to open an issue or contact the maintainers.
 
