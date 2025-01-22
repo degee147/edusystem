@@ -54,6 +54,11 @@ REST API for a course management system that supports multiple educational insti
    python manage.py seed_data
    ```
 
+8. Run App:
+   ```bash
+   python manage.py runserver
+   ```
+
 ## Usage
 
 Access the API endpoints via http://127.0.0.1:8000/. Refer to the API documentation for detailed usage.
