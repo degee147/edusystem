@@ -1,6 +1,5 @@
-# api/management/commands/seed_data.py
 from django.core.management.base import BaseCommand
-from api.models import Institution, Course, Student, Enrollment, Analytic
+from api.models import Institution, Course, Student, Enrollment, Analytics
 from faker import Faker
 import random
 
@@ -29,8 +28,8 @@ class Command(BaseCommand):
             "Game Development with Unity"
         ]
 
-        # Create 15 Institutions
-        for i in range(15):
+        # Create 3 Institutions
+        for i in range(3):
             institution = Institution.objects.create(
                 name=fake.company(),
                 address=fake.address(),
@@ -38,7 +37,19 @@ class Command(BaseCommand):
                 config={"max_students": random.randint(50, 200)},
             )
 
-            # Create 15 Courses for each Institution with realistic names
+            # Create 15 Students for each Institution
+            students = []  # Store students to avoid re-creating them
+            for _ in range(15):
+                student = Student.objects.create(
+                    first_name=fake.first_name(),
+                    last_name=fake.last_name(),
+                    email=fake.email(),
+                    institution=institution
+                )
+                students.append(student)
+
+            # Create 15 Courses for each Institution
+            courses = []  # Store courses to avoid re-creating them
             for _ in range(15):
                 course_name = random.choice(course_names)  # Select a random course name from the list
                 course = Course.objects.create(
@@ -47,10 +58,11 @@ class Command(BaseCommand):
                     description=fake.text(),
                     max_students=random.randint(20, 100),
                 )
+                courses.append(course)
 
-                # Create Analytic only if it doesn't exist
-                if not Analytic.objects.filter(course=course).exists():
-                    Analytic.objects.create(
+                # Create Analytics only if it doesn't exist
+                if not Analytics.objects.filter(course=course).exists():
+                    Analytics.objects.create(
                         course=course,
                         total_enrollments=random.randint(10, 50),
                         completed_courses=random.randint(5, 50),
@@ -59,16 +71,9 @@ class Command(BaseCommand):
                         active_students=random.randint(5, 40),
                     )
 
-            # Create 15 Students
-            for _ in range(15):
-                student = Student.objects.create(
-                    first_name=fake.first_name(),
-                    last_name=fake.last_name(),
-                    email=fake.email(),
-                )
-
-                # Create Enrollments for each Student in random Courses
-                for course in Course.objects.all():
+            # Create Enrollments for each Student in the courses of the institution
+            for student in students:
+                for course in courses:
                     Enrollment.objects.create(
                         student=student,
                         course=course,
@@ -76,4 +81,4 @@ class Command(BaseCommand):
                         active=random.choice([True, False]),
                     )
 
-        self.stdout.write(self.style.SUCCESS('Successfully seeded the database with 15 rows for each model!'))
+        self.stdout.write(self.style.SUCCESS('Successfully seeded the database with 3 institutions, 15 students, and 15 courses for each institution!'))

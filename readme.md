@@ -39,14 +39,16 @@ REST API for a course management system that supports multiple educational insti
     ```bash
     python manage.py migrate
 
+6. Create Superuser:
+    ```bash
+    python manage.py createsuperuser
+
+7. Seed Data(optional):
+    ```bash
+    python manage.py seed_data
+
 
 ## Usage
 Access the API endpoints via http://127.0.0.1:8000/. Refer to the API documentation for detailed usage.
 
-Demo Super User:  
-    
-    User: admin
-    Pass: admin
-
-Do not use in Production.    
 
