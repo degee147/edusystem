@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     
     # apps
     'rest_framework',
+    'drf_yasg',
     'api.apps.ApiConfig',
 ]
 
@@ -53,6 +54,18 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',  
     ],
+}
+
+SWAGGER_SETTINGS = {
+    'USE_SESSION_AUTH': False,  # Disable username/password login
+    'SECURITY_DEFINITIONS': {
+        'Bearer': {
+            'type': 'apiKey',
+            'name': 'Authorization',
+            'in': 'header',
+            'description': 'JWT Token in the format: Bearer <your_token>',
+        },
+    },
 }
 
 MIDDLEWARE = [

@@ -95,9 +95,6 @@ Alternatively, you can manually set it in the **Headers** tab:
 
 ## API Endpoints
 
-Refer to the auto-generated API documentation or Postman collection for detailed endpoints and payload structures.
-
----
-
-For further assistance or feature requests, feel free to open an issue or contact the maintainers.
-
+Refer to the auto-generated API documentation for detailed endpoints and payload structures.
+ - http://127.0.0.1:8000/swagger/
+ - http://127.0.0.1:8000/redoc/
