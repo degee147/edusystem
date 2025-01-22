@@ -68,12 +68,15 @@ Access the API endpoints via http://127.0.0.1:8000/. Refer to the API documentat
 - **Enrollment Management**: Only admins can view and modify enrollments.
 - **Analytics**: Only admins can view and modify analytics.
 
+Use Django-Admin Interface to update User Roles
+
 ### Login and Authorization
 
 The login endpoint is available at:
 ```bash
 http://127.0.0.1:8000/api/login/
 ```
+
 
 After logging in, you will receive a JWT token. Use this token to access protected endpoints.
 
